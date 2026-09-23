@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Orix Global — 300+ muvaffaqiyatli natijalar va vizalar arxivi." />
+  <title>Orix Global | Barcha natijalar va vizalar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: '#0B192C', burgundy: '#8E1735', cream: '#F6F8FB', line: '#E5EAF0' },
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
+          boxShadow: { card: '0 8px 28px rgba(11, 25, 44, .07)', soft: '0 20px 60px rgba(11, 25, 44, .10)' }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: Inter, sans-serif; }
+    .display { font-family: "DM Serif Display", Georgia, serif; }
+    .grid-lines { background-image: linear-gradient(rgba(11,25,44,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(11,25,44,.06) 1px, transparent 1px); background-size: 28px 28px; }
+    .result-card { animation: entry .45s ease both; }
+    @keyframes entry { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] text-ink antialiased">
+  <header class="border-b border-line bg-white/90 backdrop-blur">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 lg:px-8">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="grid h-20 w-20 place-items-center rounded-full bg-white p-2.5 shadow-sm ring-1 ring-ink/10 overflow-hidden"><img src="photo_2026-02-11_17-36-33-removebg-preview.png" alt="Orix Global logotipi" class="h-16 w-16 scale-[1.35] object-contain" /></span>
+        <span class="font-extrabold tracking-tight">ORIX <span class="text-ink/45">GLOBAL</span></span>
+      </a>
+      <a href="index.html" class="inline-flex items-center gap-2 rounded-full border border-ink/15 px-4 py-2.5 text-sm font-bold transition hover:border-burgundy hover:text-burgundy">← Asosiy sahifaga qaytish</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="relative overflow-hidden border-b border-line bg-white">
+      <div class="absolute inset-0 grid-lines"></div>
+      <div class="relative mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28">
+        <p class="mb-5 text-xs font-extrabold uppercase tracking-[.2em] text-burgundy">Orix Global arxivi</p>
+        <h1 class="display max-w-4xl text-5xl leading-[1.05] sm:text-7xl">Barcha natijalar va <span class="text-burgundy">vizalar.</span></h1>
+        <p class="mt-7 max-w-2xl text-lg leading-8 text-ink/60">300+ muvaffaqiyatli natijalar arxivi. Har bir karta talabaning mamlakati, shahri, universiteti, dasturi va tasdiqlangan hujjatlarini ko'rsatadi.</p>
+        <div class="mt-9 flex flex-wrap gap-3 text-sm font-bold"><span class="rounded-full bg-cream px-4 py-2.5">300+ muvaffaqiyatli viza</span><span class="rounded-full bg-cream px-4 py-2.5">2 ta asosiy yo'nalish</span><span class="rounded-full bg-cream px-4 py-2.5">100% shaffof jarayon</span></div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-24">
+      <div class="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+        <div><p class="mb-3 text-xs font-extrabold uppercase tracking-[.2em] text-burgundy">Tasdiqlangan natijalar</p><h2 class="display text-4xl">Talabalarimiz yo'li</h2></div>
+        <p id="resultCounter" class="text-sm font-semibold text-slate-500"></p>
+      </div>
+      <div id="archiveGrid" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
+      <div class="mt-12 text-center">
+        <button id="loadMore" type="button" class="inline-flex items-center gap-2 rounded-full bg-ink px-7 py-4 text-sm font-bold text-white transition hover:-translate-y-1 hover:bg-burgundy">Ko'proq yuklash (+30) <i data-lucide="plus" class="h-4 w-4"></i></button>
+        <p class="mt-3 text-xs text-slate-400">Tezkor ishlash uchun natijalar 30 tadan yuklanadi</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-ink/85 p-5 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Hujjat ko'rinishi">
+    <div class="relative max-h-[92vh] max-w-4xl rounded-2xl bg-white p-3 shadow-2xl">
+      <button id="lightboxClose" type="button" class="absolute right-3 top-3 z-10 grid h-10 w-10 place-items-center rounded-full bg-ink text-white shadow-lg" aria-label="Yopish"><i data-lucide="x" class="h-5 w-5"></i></button>
+      <img id="lightboxImage" src="" alt="" class="max-h-[82vh] max-w-full rounded-xl object-contain" />
+      <p id="lightboxCaption" class="px-2 pb-1 pt-3 text-center text-sm font-bold text-ink"></p>
+    </div>
+  </div>
+
+  <footer class="bg-ink py-8 text-center text-xs text-white/50">© 2024 Orix Global. Telegram orqali 24/7 murojaat qilishingiz mumkin.</footer>
+
+  <script>
+    lucide.createIcons();
+    const archiveGrid = document.getElementById('archiveGrid');
+    const loadMore = document.getElementById('loadMore');
+    const resultCounter = document.getElementById('resultCounter');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const resultSeeds = [
+      { city: 'Janubiy Koreya, Seoul', university: 'Sejong University', program: 'Bakalavr', grant: '50% grant', name: 'Bekzod Kasimov', flag: '🇰🇷' },
+      { city: 'Janubiy Koreya, Seoul', university: 'Hanyang University', program: 'Til kursi', grant: '', name: 'Aziza Rahimova', flag: '🇰🇷' },
+      { city: 'Janubiy Koreya, Busan', university: 'Pusan National University', program: 'Magistratura', grant: '30% grant', name: 'Muhammad Aliyev', flag: '🇰🇷' },
+      { city: 'Singapur, Singapur', university: 'James Cook Singapore', program: 'Bakalavr', grant: '', name: 'Madina Sobirova', flag: '🇸🇬' },
+      { city: 'Janubiy Koreya, Daejeon', university: 'KAIST', program: 'Magistratura', grant: '50% grant', name: 'Jasur Karimov', flag: '🇰🇷' },
+      { city: 'Singapur, Singapur', university: 'Nanyang Institute', program: 'Til kursi', grant: '', name: 'Nilufar Toshpulatova', flag: '🇸🇬' }
+    ];
+    const results = Array.from({ length: 36 }, (_, index) => ({ ...resultSeeds[index % resultSeeds.length], name: index < resultSeeds.length ? resultSeeds[index].name : `Orix Global talabasi ${index + 1}` }));
+    let shown = 0;
+    const cardMarkup = result => `
+      <article class="result-card flex flex-col rounded-3xl border border-line bg-white p-6 shadow-card transition hover:-translate-y-1">
+        <div class="flex items-start justify-between gap-3"><span class="rounded-full bg-cream px-3 py-1.5 text-xs font-bold text-burgundy">${result.city}</span><span class="text-xl">${result.flag}</span></div>
+        <div class="mt-7"><h3 class="text-lg font-extrabold text-ink">${result.university}</h3><p class="mt-2 text-sm font-semibold text-slate-600">${result.program}</p>${result.grant ? `<p class="mt-2 text-sm font-medium text-burgundy">${result.grant}</p>` : ''}<p class="mt-4 text-xs font-bold uppercase tracking-[.14em] text-slate-400">Talaba: ${result.name}</p></div>
+        <div class="mt-7 grid grid-cols-2 gap-3 border-t border-line pt-5">
+          <button type="button" class="lightbox-trigger group relative overflow-hidden rounded-xl bg-cream" data-image="natijalar_images/acceptence/bekzod.png" data-caption="Qabul qilingani haqida xat"><img src="natijalar_images/acceptence/bekzod.png" alt="Qabul qilingani haqida xat" class="h-24 w-full object-cover object-top transition group-hover:scale-105" /><span class="absolute inset-x-1 bottom-1 rounded bg-white/90 px-1 py-1 text-[9px] font-bold text-ink">Qabul xati</span></button>
+          <button type="button" class="lightbox-trigger group relative overflow-hidden rounded-xl bg-cream" data-image="natijalar_images/visa/bekzod.png" data-caption="Viza tasdig'i"><img src="natijalar_images/visa/bekzod.png" alt="Viza tasdig'i" class="h-24 w-full object-cover object-top transition group-hover:scale-105" /><span class="absolute inset-x-1 bottom-1 rounded bg-white/90 px-1 py-1 text-[9px] font-bold text-ink">Viza</span></button>
+        </div>
+      </article>`;
+    const bindLightboxes = () => {
+      archiveGrid.querySelectorAll('.lightbox-trigger').forEach(trigger => {
+        trigger.addEventListener('click', () => {
+          lightboxImage.src = trigger.dataset.image;
+          lightboxImage.alt = trigger.dataset.caption;
+          lightboxCaption.textContent = trigger.dataset.caption;
+          lightbox.classList.remove('hidden');
+          lightbox.classList.add('flex');
+        });
+      });
+    };
+    const renderBatch = () => {
+      results.slice(shown, shown + 30).forEach(result => { archiveGrid.insertAdjacentHTML('beforeend', cardMarkup(result)); });
+      shown = Math.min(shown + 30, results.length);
+      resultCounter.textContent = `${shown} ta natija ko'rsatilmoqda`;
+      bindLightboxes();
+      lucide.createIcons();
+      if (shown >= results.length) {
+        loadMore.innerHTML = 'Barcha natijalar ko\'rsatildi <i data-lucide="check" class="h-4 w-4"></i>';
+        loadMore.disabled = true;
+        loadMore.classList.add('cursor-default', 'opacity-60');
+        lucide.createIcons();
+      }
+    };
+    const closeLightbox = () => { lightbox.classList.add('hidden'); lightbox.classList.remove('flex'); lightboxImage.src = ''; };
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', event => { if (event.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') closeLightbox(); });
+    loadMore.addEventListener('click', renderBatch);
+    renderBatch();
+  </script>
+</body>
+</html>
