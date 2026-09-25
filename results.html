@@ -83,7 +83,9 @@
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.getElementById('lightboxImage');
     const lightboxCaption = document.getElementById('lightboxCaption');
-    const resultSeeds = [
+    // Yangi natija qo'shish uchun shu massivga bitta obyekt qo'shing.
+    // Natijani o'chirish uchun aynan uning obyektini butunlay o'chiring.
+    const results = [
       { city: 'Janubiy Koreya, Seoul', university: 'Sejong University', program: 'Bakalavr', grant: '50% grant', name: 'Bekzod Kasimov', flag: '🇰🇷' },
       { city: 'Janubiy Koreya, Seoul', university: 'Hanyang University', program: 'Til kursi', grant: '', name: 'Aziza Rahimova', flag: '🇰🇷' },
       { city: 'Janubiy Koreya, Busan', university: 'Pusan National University', program: 'Magistratura', grant: '30% grant', name: 'Muhammad Aliyev', flag: '🇰🇷' },
@@ -91,7 +93,6 @@
       { city: 'Janubiy Koreya, Daejeon', university: 'KAIST', program: 'Magistratura', grant: '50% grant', name: 'Jasur Karimov', flag: '🇰🇷' },
       { city: 'Singapur, Singapur', university: 'Nanyang Institute', program: 'Til kursi', grant: '', name: 'Nilufar Toshpulatova', flag: '🇸🇬' }
     ];
-    const results = Array.from({ length: 36 }, (_, index) => ({ ...resultSeeds[index % resultSeeds.length], name: index < resultSeeds.length ? resultSeeds[index].name : `Orix Global talabasi ${index + 1}` }));
     let shown = 0;
     const cardMarkup = result => `
       <article class="result-card flex flex-col rounded-3xl border border-line bg-white p-6 shadow-card transition hover:-translate-y-1">
